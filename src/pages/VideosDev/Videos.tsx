@@ -1,9 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Footer from "../../components/footer/footer";
 import Header from "../../components/header/header";
 import "./Videos.css";
+import useFetch from "../../Hooks/useFetch";
+import { Job } from "../../Hooks/types";
 
 const Video: React.FC = () => {
+    const { data, isLoading } = useFetch({
+        url: "http://3.38.98.134/meetups",
+    });
+    const [, setCompanyNames] = useState<string[]>([]);
+
+    useEffect(() => {
+        if (Array.isArray(data) && data.length > 0) {
+            const names = data.map(
+                (job: Job) => job.organization_name || "Не указано"
+            );
+            setCompanyNames(names);
+        }
+    }, [data]);
+
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
     return (
         <>
             <Header />
@@ -12,60 +31,48 @@ const Video: React.FC = () => {
                     <div className="btn-vkb">
                         <button>Добавить видео</button>
                     </div>
+                    <div className="h11">
+                        <h1>Все видео</h1>
+                    </div>
                     <div className="video">
-                        <div className="h11">
-                            <h1>Все видео</h1>
-                        </div>
-                        <div className="video-df">
-                            <div className="video-bg">
-                                <div className="vs-video">
-                                    <img
-                                        src="https://i.ytimg.com/vi_webp/C2ICic8y5D8/maxresdefault.webp"
-                                        alt="img"
-                                    />
-                                    <h1>
-                                        ChatGPT — <br />
-                                        революция или <br /> мода? Как нейросети{" "}
-                                        <br />
-                                        могут помочь в <br /> работе
-                                    </h1>
-                                    <div className="video-text">
-                                        <h2>
-                                            <span>Организатор</span> <br />
-                                            Kolesa Group
-                                        </h2>
-                                        <h2>
-                                            <span>Когда</span> <br />
-                                            12 сентября 2023
-                                        </h2>
+                        {Array.isArray(data) &&
+                            data.map((job: Job, index: number) => (
+                                <a
+                                    key={index}
+                                    href={`/ru/jobs/${job.slug}`}
+                                    className="link"
+                                >
+                                    <div
+                                        className="video__content"
+                                        style={{
+                                            backgroundImage: `url(${job.cover})`,
+                                        }}
+                                    >
+                                        <div className="video-df">
+                                            <div className="video-bg">
+                                                <div className="vs-video">
+                                                    <h1>{job.title}</h1>
+                                                    <div className="video-text">
+                                                        <h2>
+                                                            <span>
+                                                                Организатор
+                                                            </span>
+                                                            <br />
+                                                            {job.organization_name ||
+                                                                "Не указано"}
+                                                        </h2>
+                                                        <h2>
+                                                            <span>Когда</span>
+                                                            <br />
+                                                            {job.date}
+                                                        </h2>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div className="video-bg">
-                                <div className="vs-video">
-                                    <img
-                                        src="https://i.ytimg.com/vi_webp/C2ICic8y5D8/maxresdefault.webp"
-                                        alt="img"
-                                    />
-                                    <h1>
-                                        ChatGPT — <br />
-                                        революция или <br /> мода? Как нейросети{" "}
-                                        <br />
-                                        могут помочь в <br /> работе
-                                    </h1>
-                                    <div className="video-text">
-                                        <h2>
-                                            <span>Организатор</span> <br />
-                                            Kolesa Group
-                                        </h2>
-                                        <h2>
-                                            <span>Когда</span> <br />
-                                            12 сентября 2023
-                                        </h2>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                                </a>
+                            ))}
                     </div>
                 </div>
             </div>

@@ -1,0 +1,46 @@
+.organization__item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 21px;
+    background: #f1f4f9;
+}
+.content__organization {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 21px;
+    background: #f1f4f9;
+}
+
+.organization_logo img {
+    width: 30%;
+    height: 50%;
+}
+
+.organizationItem_right {
+    display: flex;
+    gap: 12px;
+}
+
+.organizationItem_left {
+    display: flex;
+    gap: 12px;
+}
+
+.organization_details {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.organization__title {
+    color: #a5a3a3;
+    font-size: 16px;
+}
+
+.organization__num,
+.organization__name {
+    color: #191f9d;
+    font-size: 18px;
+}

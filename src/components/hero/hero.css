@@ -1,6 +1,7 @@
 .hero {
     max-width: 100%;
 }
+
 .hero__content-h1 {
     display: inline-block;
     font-size: 24px;
@@ -12,11 +13,20 @@
     margin-top: 45px;
 }
 .hero__logo {
-    background: #c2a7a7;
+    background: #6e6c6c;
     margin-top: 30px;
     max-width: 100%;
-    padding: 21px;
     right: 21px;
+    height: 440px;
+}
+
+.hero__logo img {
+    filter: blur(11px);
+    opacity: 0.8;
+    position: absolute;
+    z-index: 1;
+    width: 61%;
+    height: 435px;
 }
 
 .hero__logo__text p {
@@ -25,6 +35,12 @@
     line-height: normal;
     font-size: 18px;
     letter-spacing: 0.03em;
+    z-index: 2;
+    position: relative;
+    margin-top: 30px;
+    margin-left: 20px;
+    padding-top: 50px;
+    padding: 21px;
 }
 .hero__logo__text h2 {
     color: #fff;
@@ -34,11 +50,16 @@
     flex: 1 1 100%;
     margin-bottom: 20px;
     margin-top: 60px;
+    z-index: 2;
+    position: relative;
 }
 .hero__logo__organizer {
     display: flex;
     gap: 60px;
     color: #fff;
+    margin-top: 280px;
+    margin-left: 20px;
+    padding: 21px;
 }
 
 .hero-organizer p {
@@ -46,6 +67,8 @@
     font-size: 14px;
     letter-spacing: 0.03em;
     font-weight: 400;
+    z-index: 2;
+    position: relative;
 }
 .hero-organizer h4 {
     line-height: normal;
@@ -53,12 +76,16 @@
     letter-spacing: 0.03em;
     padding: 0;
     margin: 0;
+    z-index: 2;
+    position: relative;
 }
 .hero-location p {
     display: block;
     font-size: 14px;
     letter-spacing: 0.03em;
     font-weight: 400;
+    z-index: 2;
+    position: relative;
 }
 .hero-location h4 {
     font-family: proxima-nova, sans-serif;
@@ -67,7 +94,15 @@
     letter-spacing: 0.03em;
     padding: 0;
     margin: 0;
+    z-index: 2;
+    position: relative;
 }
+@media screen and (max-width: 1445px) {
+    .hero__logo img {
+        width: 81%;
+    }
+}
+
 @media screen and (max-width: 500px) {
     .hero__logo__text h2 {
         font-size: 30px;

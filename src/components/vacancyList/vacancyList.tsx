@@ -1,83 +1,116 @@
-import axios from "axios";
-import { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./vacancyList.css";
-import { useNavigate } from "react-router-dom";
-interface Vacancy {
-    id: number;
-    logo: string;
-    organization: string;
-    office: string;
-    salary: string | number;
-    jobType: string;
-}
+import useFetch from "../../Hooks/useFetch";
+import { Job } from "../../Hooks/types";
 
-const VacancyList: React.FC = () => {
-    const [data, setData] = useState<Vacancy[]>([]);
-    const navigate = useNavigate();
-
-    const handleVacancyClick = (id: number) => {
-        navigate(`/JobPage/${id}`);
-    };
+function Vacancies() {
+    const { data, isLoading } = useFetch({
+        url: "http://3.38.98.134/jobs",
+    });
+    const [, setCompanyNames] = useState<string[]>([]);
 
     useEffect(() => {
-        axios("https://01de09931cc9286e.mokky.dev/allvakansies")
-            .then((res) => {
-                setData(res.data);
-            })
-            .catch((err) => {
-                console.error("Error fetching data:", err);
-            });
-    }, []);
+        if (data.length > 0) {
+            const names = data.map(
+                (job: Job) => job.organization_name || "Не указано"
+            );
+            setCompanyNames(names);
+        }
+    }, [data]);
+
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <>
-            <div className="container">
-                <div className="VacancyList">
-                    {data.map((vacancy) => (
-                        <div
-                            key={vacancy.id}
-                            className="VacancyList__item"
-                            onClick={() => handleVacancyClick(vacancy.id)}
-                        >
-                            <div className="vacancy_logo">
-                                <img src={vacancy.logo} />
-                            </div>
-                            <div className="logo-detalils">
-                                <div className="VacancyList__details">
-                                    <b className="VacancyList__title">
-                                        Компания
-                                    </b>
-                                    <b className="VacancyList__name">
-                                        {vacancy.organization}
-                                    </b>
+            <div id="vacancies">
+                <div className="container">
+                    <div className="vacancies__content">
+                        {data.map((job: Job, index: number) => (
+                            <a
+                                key={index}
+                                href={`/ru/jobs/${job.slug}`}
+                                className="link"
+                            >
+                                <div
+                                    className="jobs-item content"
+                                    data-v-6dc437e8
+                                >
+                                    <div
+                                        className="information"
+                                        data-v-6dc437e8
+                                    >
+                                        <div
+                                            className="jobs-item-field icon company"
+                                            data-v-6dc437e8
+                                        >
+                                            {job.organization_icon && (
+                                                <img
+                                                    src={job.organization_icon}
+                                                    alt={`${job.organization_name} logo`}
+                                                    className="image"
+                                                />
+                                            )}
+                                        </div>
+                                        <div
+                                            className="jobs-item-field company"
+                                            data-v-6dc437e8
+                                        >
+                                            <span
+                                                className="label"
+                                                data-v-6dc437e8
+                                            >
+                                                <p>Компания</p>
+                                            </span>
+                                            {job.organization_name ||
+                                                "Не указано"}
+                                        </div>
+                                        <div
+                                            className="jobs-item-field position"
+                                            data-v-6dc437e8
+                                        >
+                                            <span
+                                                className="label"
+                                                data-v-6dc437e8
+                                            >
+                                                <p>Должность</p>
+                                            </span>
+                                            {job.position}
+                                        </div>
+                                        <div
+                                            className="jobs-item-field price"
+                                            data-v-6dc437e8
+                                        >
+                                            <span
+                                                className="label"
+                                                data-v-6dc437e8
+                                            >
+                                                <p>Оклад</p>
+                                            </span>
+                                            {job.salary}
+                                        </div>
+                                        <div
+                                            className="jobs-item-field type"
+                                            data-v-6dc437e8
+                                        >
+                                            <span
+                                                className="label"
+                                                data-v-6dc437e8
+                                            >
+                                                <p>Тип</p>
+                                            </span>
+                                            {job.type}
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="VacancyList__details">
-                                    <b className="VacancyList__title">
-                                        Должность
-                                    </b>
-                                    <b className="VacancyList__office">
-                                        {vacancy.office}
-                                    </b>
-                                </div>
-                                <div className="VacancyList__details">
-                                    <b className="VacancyList__title">Оклад</b>
-                                    <b className="VacancyList__salary">
-                                        {vacancy.salary}
-                                    </b>
-                                </div>
-                                <div className="VacancyList__details">
-                                    <b className="VacancyList__title">Тип</b>
-                                    <b className="VacancyList__type">
-                                        {vacancy.jobType}
-                                    </b>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
+                            </a>
+                        ))}
+                    </div>
                 </div>
             </div>
         </>
     );
-};
+}
 
-export default VacancyList;
+export default Vacancies;

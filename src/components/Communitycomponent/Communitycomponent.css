@@ -1,113 +1,34 @@
-.Communitycomponent-title {
-    flex: 1 1 100%;
-    color: #a7b0c2;
-    font-size: 24px;
-    letter-spacing: 0.03em;
-    font-weight: 700;
-    margin: 35px 0 25px;
-}
-
-.content__resources {
+.content__resources_resources_reources {
+    display: flex;
+    gap: 10px;
     flex-wrap: wrap;
 }
-.content__resources a {
-    margin-right: 13px;
-    margin-bottom: 13px;
-    color: #fff;
-    display: inline-flex;
-    gap: 10px;
-    align-items: center;
-    font-weight: 600;
-    font-size: 18px;
-    text-decoration: none;
-}
-.content__resources_resources {
-    width: 250px;
+.chat__block {
+    width: 282px;
     height: 55px;
-    border: none;
     border: none;
     background: #0085ff;
     display: flex;
-    justify-content: flex-start;
 }
-.content__resources_openings {
-    width: 250px;
+
+.chat__block img {
     height: 55px;
-    border: none;
-    background: #0085ff;
 }
-.content__resources_events {
-    width: 250px;
-    height: 55px;
-    border: none;
-    background: #0085ff;
+
+.chat__block p {
+    color: #fff;
+    font-weight: 700;
+    font-size: 16px;
+    margin: 17px 0px 0px 10px;
 }
-.content__resources_conferences {
-    width: 250px;
-    height: 55px;
-    border: none;
-    background: #0085ff;
+.Communitycomponent-title {
+    margin: 35px 0 25px;
+    color: #a7b0c2;
+    font-size: 24px;
+    font-weight: 700;
 }
-.content__resources_Relocate {
-    width: 250px;
-    height: 55px;
-    border: none;
-    background: #0085ff;
-}
-.content__resources_resources img {
-    width: 53px;
-    height: 53px;
-    filter: #0085ff;
-    color: black;
-    background: #0085ff;
-}
-.content__resources_openings img {
-    width: 53px;
-    height: 53px;
-    filter: #0085ff;
-    color: black;
-    background: #0085ff;
-}
-.content__resources_events img {
-    width: 53px;
-    height: 53px;
-    filter: #0085ff;
-    color: black;
-    background: #0085ff;
-}
-.content__resources_conferences img {
-    width: 53px;
-    height: 53px;
-    filter: #0085ff;
-    color: black;
-    background: #0085ff;
-}
-.content__resources_Relocate img {
-    width: 53px;
-    height: 53px;
-    filter: #0085ff;
-    color: black;
-    background: #0085ff;
-}
-@media screen and (max-width: 500px) {
-    .content__resources_resources {
-        max-width: 100%;
-        width: 95%;
-    }
-    .content__resources_openings {
-        max-width: 100%;
-        width: 95%;
-    }
-    .content__resources_events {
-        max-width: 100%;
-        width: 95%;
-    }
-    .content__resources_conferences {
-        max-width: 100%;
-        width: 95%;
-    }
-    .content__resources_Relocate {
-        max-width: 100%;
-        width: 95%;
+@media screen and (max-width: 350px) {
+    .chat__block p {
+        font-size: 14px;
     }
 }

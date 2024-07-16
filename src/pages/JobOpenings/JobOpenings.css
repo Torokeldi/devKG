@@ -4,10 +4,8 @@
 }
 
 .vacancy-btn {
-    position: relative;
-    left: 50%;
     display: block;
-    margin: 20px auto;
+    margin: 20px 0px;
     padding: 10px 20px;
     font-size: 16px;
     background-color: #6fcf97;
@@ -15,5 +13,4 @@
     border: none;
     border-radius: 1px;
     cursor: pointer;
-    transition: background-color 0.3s;
 }
