@@ -12,6 +12,10 @@ function Header() {
         navigate("/");
     }
 
+    function entryWeb() {
+        navigate("/DevForms");
+    }
+
     function toggleBurgerMenu() {
         setIsBurgerOpen(!isBurgerOpen);
     }
@@ -100,14 +104,17 @@ function Header() {
                                     </Link>
                                 </div>
                                 <div>
-                                    <p className="burger-menu__list-paragraft">
+                                    <p
+                                        className="burger-menu__list-paragraft"
+                                        onClick={toggleBurgerMenu}
+                                    >
                                         <VscClose />
                                     </p>
                                 </div>
                             </nav>
                         </div>
                         <div className="header__enter">
-                            <button>
+                            <button onClick={entryWeb}>
                                 <span>
                                     <SlArrowRightCircle />
                                 </span>
