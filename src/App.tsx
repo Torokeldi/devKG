@@ -8,11 +8,16 @@ import Organizations from "./pages/Organizations/Organizations";
 import Community from "./pages/Community/Community";
 import AddVacancy from "./pages/addVacancy/addVacancy"
 import JobPage from "./components/JobPage/JobPage";
+import DevForms from "./pages/DevForms/DevForms";
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <Home />,
+    },
+    {
+        path: "/DevForms",
+        element: <DevForms />,
     },
     {
         path: "/JobOpenings",
