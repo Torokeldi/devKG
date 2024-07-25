@@ -2,6 +2,7 @@ import React from "react";
 import '../../pages/DevForms/DevForms.css';
 import axios from "axios";
 import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 interface LoginFormProps {
   username: string;
@@ -13,6 +14,7 @@ interface LoginFormProps {
 const loginApi = "http://3.38.98.134/auth/login";
 
 const LoginForm: React.FC<LoginFormProps> = ({ username, setUsername, password, setPassword }) => {
+  const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
       e.preventDefault();
@@ -24,6 +26,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ username, setUsername, password, 
           if (response.data.success) {
               Cookies.set("token", response.data.token, { expires: 7 });
               alert(response.data.message);
+              navigate("/");
           } else {
               alert("Не удалось авторизоваться: " + response.data.message);
           }
