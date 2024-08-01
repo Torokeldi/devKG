@@ -25,7 +25,7 @@ const Video: React.FC = () => {
     }
     return (
         <>
-            <Header />
+            <Header isRegistered={false} />
             <div id="Video">
                 <div className="container">
                     <div className="btn-vkb">

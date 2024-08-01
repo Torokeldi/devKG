@@ -11,7 +11,7 @@ import Header from "../../components/header/header";
 function Community() {
     return (
         <div>
-            <Header />
+            <Header isRegistered={false} />
             <Communitycomponent />
             <ComminitycomponentChats />
             <ComminitycomponentChannels />

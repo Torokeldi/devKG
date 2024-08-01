@@ -56,7 +56,7 @@ function JobPage() {
 
     return (
         <>
-            <Header />
+            <Header isRegistered={false} />
             <div className="container">
                 <div className="job-list-container">
                     <div className="logo-office">
