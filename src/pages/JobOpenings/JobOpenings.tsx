@@ -14,12 +14,12 @@ function JobOpenings() {
 
     return (
         <>
-            <Header />
+            <Header isRegistered={false} />
             <div className="container">
                 <div className="JobOpenings_content">
                     <button className="vacancy-btn" onClick={AddVacancy}>
                         Добавить вакансию
-                    </button>
+                    </button> 
                 </div>
             </div>
             <VacancyList />

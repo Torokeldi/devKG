@@ -5,7 +5,7 @@ import Hero from "../../components/hero/hero";
 function Home() {
     return (
         <>
-            <Header />
+            <Header isRegistered={false} />
             <Hero />
             <Footer />
         </>

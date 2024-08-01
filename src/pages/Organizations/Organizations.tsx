@@ -6,7 +6,7 @@ import OrganizationItem from "../../components/OrganizationItem/OrganizationItem
 const Organizations: React.FC = () => {
     return (
         <div>
-            <Header />
+            <Header isRegistered={false} />
             <div style={{ width: "50%", margin: "0 auto" }}>
                 <OrganizationItem />
             </div>
