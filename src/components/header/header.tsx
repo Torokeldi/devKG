@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { VscClose } from "react-icons/vsc";
@@ -8,12 +8,19 @@ import "./header.css";
 
 const Header: React.FC<{ isRegistered: boolean }> = ({ isRegistered }) => {
   const [isBurgerOpen, setIsBurgerOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = Cookies.get("token");
+    if (token) {
+      setIsAuthenticated(true);
+    }
+  }, []);
 
   const logoHeader = () => navigate("/");
   const toggleBurgerMenu = () => setIsBurgerOpen(!isBurgerOpen);
   const handleJobsClick = () => navigate("/JobOpenings");
-  const token = Cookies.get("token");
 
   return (
     <div className="header">
@@ -24,7 +31,9 @@ const Header: React.FC<{ isRegistered: boolean }> = ({ isRegistered }) => {
           </div>
 
           <div className="header__nav">
-            <span onClick={handleJobsClick} className="nav-link">Вакансии</span>
+            {isAuthenticated && (
+              <span onClick={handleJobsClick} className="nav-link" style={{cursor: 'pointer'}}>Вакансии</span>
+            )}
             <Link to="/Events" className="nav-link">Мероприятия</Link>
             <Link to="/Video" className="nav-link">Видео</Link>
             <Link to="/Organizations" className="nav-link">Организации</Link>
@@ -46,7 +55,9 @@ const Header: React.FC<{ isRegistered: boolean }> = ({ isRegistered }) => {
                   <Link className="burger-menu__list-logo" to="/" onClick={toggleBurgerMenu}>
                     <img src="https://devkg.com/js/img/logo.458f2cd.svg" alt="Logo" />
                   </Link>
-                  <span onClick={handleJobsClick} className="burger-menu-link">Вакансии</span>
+                  {isAuthenticated && (
+                    <span onClick={handleJobsClick} className="burger-menu-link">Вакансии</span>
+                  )}
                   <Link to="/Events" className="burger-menu-link" onClick={toggleBurgerMenu}>Мероприятия</Link>
                   <Link to="/Video" className="burger-menu-link" onClick={toggleBurgerMenu}>Видео</Link>
                   <Link to="/Organizations" className="burger-menu-link" onClick={toggleBurgerMenu}>Организации</Link>
@@ -58,7 +69,7 @@ const Header: React.FC<{ isRegistered: boolean }> = ({ isRegistered }) => {
               </nav>
             </div>
 
-            {!token && (
+            {!isAuthenticated && (
               <div className="header__enter" onClick={() => navigate("/DevForms")}>
                 <button>
                   <SlArrowRightCircle />
