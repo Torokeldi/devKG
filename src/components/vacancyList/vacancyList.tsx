@@ -1,116 +1,67 @@
-import React, { useEffect, useState } from "react";
-import "./vacancyList.css";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import useFetch from "../../Hooks/useFetch";
 import { Job } from "../../Hooks/types";
+import "./vacancyList.css";
 
-function Vacancies() {
-    const { data, isLoading } = useFetch({
+const VacancyList: React.FC = () => {
+    const { data, isLoading, error } = useFetch<Job>({
         url: "http://3.38.98.134/jobs",
     });
-    const [, setCompanyNames] = useState<string[]>([]);
+    const navigate = useNavigate();
 
-    useEffect(() => {
-        if (data.length > 0) {
-            const names = data.map(
-                (job: Job) => job.organization_name || "Не указано"
-            );
-            setCompanyNames(names);
-        }
-    }, [data]);
+    const jobId = () => {
+        const timestamp = Date.now();
+        const randomChars = Math.random().toString(36).substr(2, 8);
+        return `${timestamp}-${randomChars}`;
+    };
+
+    const handleVacancyClick = (id: string) => {
+        navigate(`/JobPage/${id}`);
+    };
 
     if (isLoading) {
         return <div>Loading...</div>;
     }
 
-    return (
-        <>
-            <div id="vacancies">
-                <div className="container">
-                    <div className="vacancies__content">
-                        {data.map((job: Job, index: number) => (
-                            <a
-                                key={index}
-                                href={`/ru/jobs/${job.slug}`}
-                                className="link"
-                            >
-                                <div
-                                    className="jobs-item content"
-                                    data-v-6dc437e8
-                                >
-                                    <div
-                                        className="information"
-                                        data-v-6dc437e8
-                                    >
-                                        <div
-                                            className="jobs-item-field icon company"
-                                            data-v-6dc437e8
-                                        >
-                                            {job.organization_icon && (
-                                                <img
-                                                    src={job.organization_icon}
-                                                    alt={`${job.organization_name} logo`}
-                                                    className="image"
-                                                />
-                                            )}
-                                        </div>
-                                        <div
-                                            className="jobs-item-field company"
-                                            data-v-6dc437e8
-                                        >
-                                            <span
-                                                className="label"
-                                                data-v-6dc437e8
-                                            >
-                                                <p>Компания</p>
-                                            </span>
-                                            {job.organization_name ||
-                                                "Не указано"}
-                                        </div>
-                                        <div
-                                            className="jobs-item-field position"
-                                            data-v-6dc437e8
-                                        >
-                                            <span
-                                                className="label"
-                                                data-v-6dc437e8
-                                            >
-                                                <p>Должность</p>
-                                            </span>
-                                            {job.position}
-                                        </div>
-                                        <div
-                                            className="jobs-item-field price"
-                                            data-v-6dc437e8
-                                        >
-                                            <span
-                                                className="label"
-                                                data-v-6dc437e8
-                                            >
-                                                <p>Оклад</p>
-                                            </span>
-                                            {job.salary}
-                                        </div>
-                                        <div
-                                            className="jobs-item-field type"
-                                            data-v-6dc437e8
-                                        >
-                                            <span
-                                                className="label"
-                                                data-v-6dc437e8
-                                            >
-                                                <p>Тип</p>
-                                            </span>
-                                            {job.type}
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        ))}
-                    </div>
-                </div>
-            </div>
-        </>
-    );
-}
+    if (error) {
+        return <div>Error: {error}</div>;
+    }
 
-export default Vacancies;
+    return (
+        <div id="vacancies" className="container">
+           {data.map((vacancy) => (
+    <div
+        key={vacancy.id || jobId()}
+        className="VacancyList__item"
+        onClick={() => handleVacancyClick(vacancy.id)}
+    >
+        <div className="vacancy_logo">
+            <img src={vacancy.organization_icon} alt={`${vacancy.organization_name} logo`} />
+        </div>
+        <div className="vacancy-items">
+            <div className="VacancyList__details">
+                <b className="VacancyList__title">Компания</b>
+                <b className="VacancyList__name">{vacancy.organization_name || "Не указано"}</b>
+            </div>
+            <div className="VacancyList__details">
+                <b className="VacancyList__title">Должность</b>
+                <b className="VacancyList__office">{vacancy.position}</b>
+            </div>
+            <div className="VacancyList__details">
+                <b className="VacancyList__title">Оклад</b>
+                <b className="VacancyList__salary">{vacancy.salary}</b>
+            </div>
+            <div className="VacancyList__details">
+                <b className="VacancyList__title">Тип</b>
+                <b className="VacancyList__type">{vacancy.type}</b>
+            </div>
+        </div>
+    </div>
+))}
+
+        </div>
+    );
+};
+
+export default VacancyList;
