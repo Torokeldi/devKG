@@ -1,45 +1,50 @@
-import { useState, useEffect } from "react";
-import { Job } from "./types";
+import { useState, useEffect, useCallback } from "react";
 
-interface UseFetchResult {
-    data: Job[];
+interface UseFetchOptions {
+    url: string;
+}
+
+interface UseFetchResult<T> {
+    data: T[];
     isLoading: boolean;
+    error: string | null;
     refetch: () => void;
 }
 
-const useFetch = (
-    { url } = {
-        url: "http://3.38.98.134/",
-    }
-): UseFetchResult => {
-    const [data, setData] = useState<Job[]>([]);
-
+const useFetch = <T = any>({ url }: UseFetchOptions): UseFetchResult<T> => {
+    const [data, setData] = useState<T[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [error, setError] = useState<string | null>(null);
 
-    const fetchData = async () => {
+    const fetchData = useCallback(async () => {
         setIsLoading(true);
+        setError(null);
         try {
             const response = await fetch(url);
-            const result = await response.json();
-            console.log("API response:", result);
-            if (result.statusCode === 200) {
-                setData(result.data as Job[]);
-                console.log("Jobs data:", result.data);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
-        } catch (error) {
-            console.error("Error fetching data:", error);
+            const result = await response.json();
+            setData(result.data as T[]);
+        } catch (err: unknown) {
+            if (err instanceof Error) {
+                setError(err.message);
+            } else {
+                setError("Unknown error occurred");
+            }
         } finally {
             setIsLoading(false);
         }
-    };
+    }, [url]);
 
     useEffect(() => {
         fetchData();
-    }, [url]);
+    }, [fetchData]);
 
     return {
-        isLoading,
         data,
+        isLoading,
+        error,
         refetch: fetchData,
     };
 };

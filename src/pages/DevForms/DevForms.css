@@ -1,97 +1,88 @@
-.login-content, .signup-content {
-    width: 100%;
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    background-color: #f9f9f9;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .login-signup-btns {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-    gap: 13px;
-  }
-  
-  .login-signup_btns button {
-    width: 48%;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    background-color: #28a745;
-    color: #fff;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  
-  .login-signup_btns button:hover {
-    background-color: #218838;
-  }
-  
-  .content {
-    text-align: center;
-  }
-  
-  h2 {
-    margin-bottom: 20px;
-  }
-  
-  form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  form div {
-    margin-bottom: 15px;
-    width: 100%;
-  }
-  
-  label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-  
-  input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-  }
-  
-  button[type="submit"] {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    background-color: #28a745;
-    color: #fff;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  
-  button[type="submit"]:hover {
-    background-color: #218838;
-  }
-  
-  .password-container {
-    display: flex;
-    flex-direction: row;
-  }
-  
-  .password-container input {
-    width: calc(100% - 100px);
-  }
-  
-  .password-container button {
-    font-size: 20px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-  }
-  
+.login-content,
+.signup-content {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.login-signup-btns {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  gap: 13px;
+}
+
+.login-signup-btns button {
+  width: 48%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #28a745;
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.login-signup-btns button:hover {
+  background-color: #218838;
+}
+
+.content {
+  text-align: center;
+}
+
+.login-content h2,
+.signup-content h2 {
+  margin-bottom: 20px;
+}
+
+.login-content form,
+.signup-content form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-content form div,
+.signup-content form div {
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.login-content label,
+.signup-content label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.login-content input,
+.signup-content input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.login-content button[type="submit"],
+.signup-content button[type="submit"] {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #28a745;
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.login-content button[type="submit"]:hover,
+.signup-content button[type="submit"]:hover {
+  background-color: #218838;
+}
