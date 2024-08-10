@@ -29,7 +29,7 @@ function JobPage() {
     if (id) {
       console.log("Fetched ID from URL:", id);
       axios
-        .get(`http://3.38.98.134/jobs/${id}`)
+        .get(`http://3.38.98.134/jobs`)
         .then((response) => {
           setVacancy(response.data);
           setIsLoading(false);
