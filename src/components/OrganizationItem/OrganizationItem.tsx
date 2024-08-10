@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react";
-import "../OrganizationItem/OrganizationItem.css";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import React, { useState, useEffect } from "react";
 import useFetch from "../../Hooks/useFetch";
 import { Job } from "../../Hooks/types";
+import "./OrganizationItem.css";
 
-function OrganizationItem() {
+const OrganizationItem: React.FC = () => {
     const { data, isLoading } = useFetch({
         url: "http://3.38.98.134/organizations",
     });
-    const [, setCompanyNames] = useState<string[]>([]);
+    const [companyNames, setCompanyNames] = useState<string[]>([]);
 
     useEffect(() => {
         if (Array.isArray(data) && data.length > 0) {
@@ -23,94 +24,52 @@ function OrganizationItem() {
     }
 
     return (
-        <>
-            <div id="vacancies">
-                <div className="container">
-                    <div className="vacancies__content">
-                        {Array.isArray(data) &&
-                            data.map((job: Job, index: number) => (
-                                <a
-                                    key={index}
-                                    href={`/ru/jobs/${job.slug}`}
-                                    className="link"
-                                >
-                                    <div
-                                        className="content__organization"
-                                        data-v-6dc437e8
-                                    >
-                                        <div
-                                            className="information"
-                                            data-v-6dc437e8
-                                        >
-                                            <div
-                                                className="organization_logo"
-                                                data-v-6dc437e8
-                                            >
-                                                {job.icon && (
-                                                    <img
-                                                        src={job.icon}
-                                                        alt={`${job.name} logo`}
-                                                        className="image"
-                                                    />
-                                                )}
-                                            </div>
-                                            <div
-                                                className="jobs-item-field company"
-                                                data-v-6dc437e8
-                                            >
-                                                <h5
-                                                    className="label"
-                                                    data-v-6dc437e8
-                                                >
-                                                    <p>Компания</p>
-                                                    {job.name || "Не указано"}
-                                                </h5>
-                                            </div>
-                                            <div
-                                                className="jobs-item-field position"
-                                                data-v-6dc437e8
-                                            >
-                                                <h5
-                                                    className="label"
-                                                    data-v-6dc437e8
-                                                >
-                                                    <p>Ваканции</p>
-                                                    {job.jobs_count}
-                                                </h5>
-                                            </div>
-                                            <div
-                                                className="jobs-item-field price"
-                                                data-v-6dc437e8
-                                            >
-                                                <h5
-                                                    className="label"
-                                                    data-v-6dc437e8
-                                                >
-                                                    <p>Мероприятия</p>
-                                                    {job.events_count}
-                                                </h5>
-                                            </div>
-                                            <div
-                                                className="jobs-item-field type"
-                                                data-v-6dc437e8
-                                            >
-                                                <h5
-                                                    className="label"
-                                                    data-v-6dc437e8
-                                                >
-                                                    <p>Видео</p>
-                                                    {job.meetups_count}
-                                                </h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            ))}
+        <div>
+            {Array.isArray(data) &&
+                data.map((job: Job) => (
+                    <div 
+                        className="organization__item" 
+                        key={job.id} 
+                    >
+                        <div className="organizationItem_left">
+                            <div className="organization_logo">
+                                <img 
+                                    src={job.icon} 
+                                    alt="Organization Logo" 
+                                />
+                            </div>
+                            <div className="organization_details">
+                                <b className="organization__title">Компания</b>
+                                <b className="organization__name">
+                                    {job.organization_name || "Не указано"}
+                                </b>
+                            </div>
+                        </div>
+
+                        <div className="organizationItem_right">
+                            <div className="organization_details">
+                                <b className="organization__title">Вакансий: </b>
+                                <b className="organization__num">
+                                    {job.jobs_count || 0}
+                                </b>
+                            </div>
+                            <div className="organization_details">
+                                <b className="organization__title">Мероприятий: </b>
+                                <b className="organization__num">
+                                    {job.events_count || 0}
+                                </b>
+                            </div>
+                            <div className="organization_details">
+                                <b className="organization__title">Видео: </b>
+                                <b className="organization__num">
+                                    {job.meetups_count || 0}
+                                </b>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </>
+                ))}
+        </div>
     );
-}
+};
 
 export default OrganizationItem;

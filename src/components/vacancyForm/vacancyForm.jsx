@@ -22,7 +22,7 @@ function VacancyForm() {
   const [lastSavedText, setLastSavedText] = useState("");
   const [isSaveButtonDisabled, setIsSaveButtonDisabled] = useState(true);
   const navigate = useNavigate();
-  const quillRef = useRef(null); // Create a ref for the ReactQuill component
+  const quillRef = useRef(null);
 
   useEffect(() => {
     setIsSaveButtonDisabled(text === lastSavedText);
