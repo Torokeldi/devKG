@@ -5,9 +5,9 @@ import LoginForm from "../../components/Login/Login";
 import SignupForm from "../../components/Signup/Signup";
 import Header from "../../components/header/header";
 import Footer from "../../components/footer/footer";
-import "./DevForms.css";
+import "./FormPages.css";
 
-const DevForms: React.FC = () => {
+const FormPages: React.FC = () => {
   const [showLogin, setShowLogin] = useState(true);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -20,7 +20,7 @@ const DevForms: React.FC = () => {
     const token = Cookies.get("token");
     if (token) {
       setIsLoggedIn(true);
-      navigate("/JobOpenings");
+      navigate("/jobs");
     }
   }, [navigate]);
 
@@ -67,4 +67,4 @@ const DevForms: React.FC = () => {
   );
 };
 
-export default DevForms;
+export default FormPages;

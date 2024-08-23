@@ -1,10 +1,9 @@
-// LoginForm.tsx
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineEye, AiFillEye } from "react-icons/ai";
-import "../../pages/DevForms/DevForms.css";
+import "../../pages/FormPages/FormPages.css";
 
 interface LoginFormProps {
   username: string;
@@ -31,7 +30,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
     const token = Cookies.get("token");
     if (token) {
       setIsLoggedIn(true);
-      navigate("/JobOpenings");
+      navigate("/jobs");
     }
   }, [navigate]);
 
@@ -50,7 +49,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
         Cookies.set("token", response.data.token, { expires: 7 });
         setLoginStatus(true);
         alert(response.data.message);
-        navigate("/JobOpenings");
+        navigate("/jobs");
       } else {
         alert("Не удалось авторизоваться: " + response.data.message);
       }

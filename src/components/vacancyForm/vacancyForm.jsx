@@ -1,87 +1,19 @@
-import React, { useState, useEffect, useRef } from "react";
+import "./../../pages/addVacancy/addVacancy.css";
+import React from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import "./../../pages/addVacancy/addVacancy.css";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { VacancyFormLogic } from "./vacancyFormLogic";
 
 function VacancyForm() {
-  const [formValues, setFormValues] = useState({
-    logo: "",
-    organization: "",
-    office: "",
-    telegram: "",
-    skype: "",
-    email: "",
-    salary: "",
-    phone: "",
-    jobType: "",
-  });
-  const [description, setDescription] = useState("");
-  const [text, setText] = useState("");
-  const [lastSavedText, setLastSavedText] = useState("");
-  const [isSaveButtonDisabled, setIsSaveButtonDisabled] = useState(true);
-  const navigate = useNavigate();
-  const quillRef = useRef(null);
-
-  useEffect(() => {
-    setIsSaveButtonDisabled(text === lastSavedText);
-  }, [text, lastSavedText]);
-
-  const handleSaveClick = () => {
-    setLastSavedText(text);
-    setIsSaveButtonDisabled(true);
-    console.log("Текст сохранен:", text);
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormValues((prevValues) => ({
-      ...prevValues,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const updatedFormValues = {
-      ...formValues,
-      id: Date.now(),
-      description,
-    };
-    console.log("Form values:", updatedFormValues);
-    axios
-      .post("http://3.38.98.134/jobs", updatedFormValues)
-      .then((res) => {
-        console.log(res.data);
-        navigate("/jobOpenings");
-      })
-      .catch((err) => {
-        console.error("Ошибка при отправке формы:", err);
-      });
-  };
-
-  const handleDescriptionChange = (value) => {
-    setDescription(value);
-    setText(value);
-  };
-
-  const toolbarOptions = [
-    ["bold", "italic", "underline", "strike"],
-    [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
-  ];
-
-  const modules = {
-    toolbar: toolbarOptions,
-  };
+  const { formState, quillRef, handleSaveClick, handleInputChange, handleSubmit, handlemessageChange, modules } = VacancyFormLogic();
 
   return (
     <form className="form-block" onSubmit={handleSubmit} autoComplete="off">
-      <p className="organization">Logo</p>
+      <p className="organization">Логотип</p>
       <input
         type="text"
-        name="logo"
-        value={formValues.logo}
+        name="organization_icon"
+        value={formState.formValues.organization_icon}
         onChange={handleInputChange}
       />
 
@@ -89,16 +21,16 @@ function VacancyForm() {
       <input
         type="text"
         name="organization"
-        value={formValues.organization}
+        value={formState.formValues.organization_name}
         onChange={handleInputChange}
       />
 
-      <p className="office">Должность</p>
-      <div className="officeVacancy">
+      <p className="position">Должность</p>
+      <div className="positionVacancy">
         <input
           type="text"
-          name="office"
-          value={formValues.office}
+          name="position"
+          value={formState.formValues.position}
           onChange={handleInputChange}
         />
         <p>Например “Junior C# Developer”</p>
@@ -108,17 +40,17 @@ function VacancyForm() {
       <input
         type="number"
         name="salary"
-        value={formValues.salary}
+        value={formState.formValues.salary}
         onChange={handleInputChange}
       />
 
-      <p className="description">Описание вакансии</p>
-      <div className="descriptionVacancy">
+      <p className="message">Описание вакансии</p>
+      <div className="messageVacancy">
         <ReactQuill
           ref={quillRef}
           theme="snow"
-          value={description}
-          onChange={handleDescriptionChange}
+          value={formState.message}
+          onChange={handlemessageChange}
           style={{
             height: "234px",
             width: "466px",
@@ -144,7 +76,7 @@ function VacancyForm() {
         <input
           type="text"
           name="telegram"
-          value={formValues.telegram}
+          value={formState.formValues.telegram}
           onChange={handleInputChange}
         />
         <p>
@@ -159,7 +91,7 @@ function VacancyForm() {
       <input
         type="text"
         name="skype"
-        value={formValues.skype}
+        value={formState.formValues.skype}
         onChange={handleInputChange}
       />
 
@@ -167,7 +99,7 @@ function VacancyForm() {
       <input
         type="email"
         name="email"
-        value={formValues.email}
+        value={formState.formValues.email}
         onChange={handleInputChange}
       />
 
@@ -175,7 +107,7 @@ function VacancyForm() {
       <input
         type="tel"
         name="phone"
-        value={formValues.phone}
+        value={formState.formValues.phone}
         onChange={handleInputChange}
       />
 
@@ -183,14 +115,14 @@ function VacancyForm() {
       <div className="typeVacancy">
         <select
           className="multiselect__content"
-          name="jobType"
-          value={formValues.jobType}
+          name="type"
+          value={formState.formValues.type}
           onChange={handleInputChange}
         >
           <option value="" disabled>
             Выберите тип работы
           </option>
-          <option className="multiselect__element" value="office">
+          <option className="multiselect__element" value="position">
             Работа в офисе (только Кыргызстан)
           </option>
           <option className="multiselect__element" value="project">
@@ -216,7 +148,7 @@ function VacancyForm() {
         <button type="submit">Продолжить</button>
         <button
           type="button"
-          disabled={isSaveButtonDisabled}
+          disabled={formState.isSaveButtonDisabled}
           onClick={handleSaveClick}
         >
           Сохранить

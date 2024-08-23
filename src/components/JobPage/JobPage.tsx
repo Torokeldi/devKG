@@ -1,172 +1,83 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import "./JobPage.css";
 import Header from "../header/header";
 import Footer from "../footer/footer";
+import "./JobPage.css";
 
 interface Vacancy {
-  logo: string;
+  organization_icon: string;
   id: string;
-  office: string;
+  position: string;
   organization: string;
   salary: string;
-  description: string;
+  message: string;
   telegram: string;
   skype: string;
   email: string;
   phone: string;
-  jobType: string;
+  type: string;
 }
 
-function JobPage() {
+const JobPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [vacancy, setVacancy] = useState<Vacancy | null>(null);
-  const nav = useNavigate();
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (id) {
-      console.log("Fetched ID from URL:", id);
       axios
-        .get(`http://3.38.98.134/jobs`)
-        .then((response) => {
-          setVacancy(response.data);
-          setIsLoading(false);
-        })
-        .catch((error) => {
-          console.error("Failed to fetch vacancy:", error);
-          setIsLoading(false);
-        });
-    } else {
-      console.error("ID is undefined");
+        .get(`http://3.38.98.134/jobs/${id}`)
+        .then((response) => setVacancy(response.data))
+        .catch(console.error)
+        .finally(() => setIsLoading(false));
     }
   }, [id]);
 
-  const removeVacancy = useCallback(
-    (id: string, e: React.MouseEvent<HTMLButtonElement>) => {
-      e.stopPropagation();
+  const removeVacancy = useCallback(() => {
+    axios
+      .delete(`http://3.38.98.134/jobs/${id}`)
+      .then(() => navigate("/jobs"))
+      .catch(console.error);
+  }, [id, navigate]);
 
-      if (!id) {
-        console.error("Cannot delete: ID is undefined");
-        return;
-      }
-
-      console.log("Deleting vacancy with ID:", id);
-
-      axios
-        .delete(`http://3.38.98.134/jobs/${id}`)
-        .then(() => {
-          setVacancy(null);
-          nav("/JobOpenings");
-        })
-        .catch((error) => {
-          console.error("Failed to delete vacancy:", error);
-        });
-    },
-    [nav]
-  );
-
-  if (isLoading) {
-    return <div className="loading">Загрузка...</div>;
-  }
-
-  if (!vacancy) {
-    return <div className="vacancy-not-found">Вакансия удалена</div>;
-  }
+  if (isLoading) return <div className="loading">Загрузка...</div>;
+  if (!vacancy) return <div className="vacancy-not-found">Вакансия удалена</div>;
 
   return (
     <>
       <Header isRegistered={false} />
       <div className="container">
         <div className="job-list-container">
-          <div className="logo-office">
-            <img src={vacancy.logo} alt="" />
-            <h2>
-              <p>Компания</p>
-              {vacancy.office}
-            </h2>
+          <div className="logo-position">
+            <img src={vacancy.organization_icon} alt="Company logo" />
+            <h2>{vacancy.position}</h2>
           </div>
-          <div className="job__organization">
-            <h4>Организация</h4>
-            <p>{vacancy.organization}</p>
-          </div>
-          <div className="job__salary">
-            <h4>Оклад:</h4>
-            <p>{vacancy.salary}</p>
-          </div>
-          <div className="job__type">
-            <h4>Тип</h4>
-            <p>{vacancy.jobType}</p>
-          </div>
-          <div className="job__description">
-            <h4 className="job__description">Описание:</h4>
-            <p>{vacancy.description}</p>
-          </div>
+          <p>{vacancy.organization}</p>
+          <p>Оклад: {vacancy.salary}</p>
+          <p>Тип: {vacancy.type}</p>
+          <p>Описание: {vacancy.message}</p>
           <div className="job__contact__info">
-            <h4 className="telegram">Telegram</h4>
-            <p>
-              {vacancy.telegram && (
-                <a
-                  href={`https://t.me/${vacancy.telegram}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {vacancy.telegram}
-                </a>
-              )}
-            </p>
-            <h4 className="skype">Skype</h4>
-            <p>
-              {vacancy.skype && (
-                <a
-                  href={`skype:${vacancy.skype}?chat`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {vacancy.skype}
-                </a>
-              )}
-            </p>
-
-            <h4 className="email">E-Mail</h4>
-            <p>
-              {vacancy.email && (
-                <a
-                  href={`mailto:${vacancy.email}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {vacancy.email}
-                </a>
-              )}
-            </p>
-
-            <h4 className="phone">Телефон</h4>
-            <p>
-              {vacancy.phone && (
-                <a
-                  href={`tel:${vacancy.phone}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {vacancy.phone}
-                </a>
-              )}
-            </p>
+            {vacancy.telegram && (
+              <a href={`https://t.me/${vacancy.telegram}`} target="_blank" rel="noopener noreferrer">Telegram</a>
+            )}
+            {vacancy.skype && (
+              <a href={`skype:${vacancy.skype}?chat`} target="_blank" rel="noopener noreferrer">Skype</a>
+            )}
+            {vacancy.email && (
+              <a href={`mailto:${vacancy.email}`} target="_blank" rel="noopener noreferrer">E-Mail</a>
+            )}
+            {vacancy.phone && (
+              <a href={`tel:${vacancy.phone}`} target="_blank" rel="noopener noreferrer">Телефон</a>
+            )}
           </div>
-          <button
-            className="delete-button"
-            type="button"
-            onClick={(e) => removeVacancy(id!, e)}
-          >
-            Удалить вакансию
-          </button>
+          <button className="delete-button" onClick={removeVacancy}>Удалить вакансию</button>
         </div>
       </div>
       <Footer />
     </>
   );
-}
+};
 
 export default JobPage;

@@ -1,26 +1,26 @@
 .job-list-container {
     font-family: Arial, Helvetica, sans-serif;
 }
-.logo-office p {
+.logo-position p {
     font-size: 14px;
     letter-spacing: 0.03em;
     color: #a7b0c2;
     margin-bottom: 2px;
 }
-.logo-office h2 {
+.logo-position h2 {
     font-size: 16px;
     margin: 10px;
     font-weight: 600;
     color: #191f5d;
 }
-.logo-office {
+.logo-position {
     display: flex;
     background: #f1f4f9;
     padding: 5px;
     height: 55px;
     gap: 10px;
 }
-/* .logo-office img {
+/* .logo-position img {
     max-width: 50%;
     max-height: 100%;
 } */
@@ -33,7 +33,7 @@
 .job__type {
     margin: 20px 0px;
 }
-.job__description {
+.job__message {
     margin: 20px 0px;
 }
 .job__contact__info {
@@ -72,12 +72,12 @@
     font-weight: 700;
     font-size: 18px;
 }
-.job__description h4 {
+.job__message h4 {
     font-size: 14px;
     color: #a7b0c2;
     margin-bottom: 2px;
 }
-.job__description p {
+.job__message p {
     color: #191f5d;
     text-decoration: none;
     font-weight: 700;

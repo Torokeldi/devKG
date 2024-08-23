@@ -1,10 +1,10 @@
-// SignupForm.tsx
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineEye, AiFillEye } from "react-icons/ai";
-import "../../pages/DevForms/DevForms.css";
+import "../../pages/FormPages/FormPages.css";
 
 interface SignupFormProps {
   username: string;
@@ -36,7 +36,7 @@ const SignupForm: React.FC<SignupFormProps> = ({
     const token = Cookies.get("token");
     if (token) {
       setIsLoggedIn(true);
-      navigate("/JobOpenings");
+      navigate("/jobs");
     }
   }, [navigate]);
 
@@ -56,7 +56,7 @@ const SignupForm: React.FC<SignupFormProps> = ({
         Cookies.set("token", response.data.token, { expires: 7 });
         setMessage(response.data.message);
         setRegistrationStatus(true);
-        navigate("/JobOpenings");
+        navigate("/jobs");
       } else {
         setMessage("Не удалось зарегистрироваться: " + response.data.message);
       }
