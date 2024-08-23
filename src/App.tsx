@@ -8,7 +8,8 @@ import Organizations from "./pages/Organizations/Organizations";
 import Community from "./pages/Community/Community";
 import AddVacancy from "./pages/addVacancy/addVacancy"
 import JobPage from "./components/JobPage/JobPage";
-import DevForms from "./pages/DevForms/DevForms";
+import FormPages from "./pages/FormPages/FormPages";
+import OrganizationPage from "./components/OrganizationPage/OrganizationPage";
 
 const router = createBrowserRouter([
     {
@@ -16,11 +17,11 @@ const router = createBrowserRouter([
         element: <Home />,
     },
     {
-        path: "/DevForms",
-        element: <DevForms />,
+        path: "/FormPages",
+        element: <FormPages />,
     },
     {
-        path: "/JobOpenings",
+        path: "/jobs",
         element: <JobOpenings />,
     },
     {
@@ -44,7 +45,11 @@ const router = createBrowserRouter([
         element: <AddVacancy />,
     },
     {
-        path: "/JobPage/:id",
+        path: "/organizations/:id",
+        element: <OrganizationPage />,
+    },
+    {
+        path: "/jobpage/:id",
         element: <JobPage />,
     },
 ]);

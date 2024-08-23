@@ -8,8 +8,8 @@ import "./OrganizationPage.css";
 interface Organization {
   organization_icon: string;
   id: string;
-  name: string;
-  description: string;
+  position: string;
+  message: string;
   address: string;
   phone: string;
   email: string;
@@ -49,9 +49,9 @@ const OrganizationPage: React.FC = () => {
         <div className="organization-content">
           <div className="logo-section">
             <img src={organization.organization_icon} alt="Organization logo" />
-            <h2>{organization.name}</h2>
+            <h2>{organization.position}</h2>
           </div>
-          <p>Описание: {organization.description}</p>
+          <p>Описание: {organization.message}</p>
           <p>Адрес: {organization.address}</p>
           <div className="organization__contact__info">
             {organization.website && (

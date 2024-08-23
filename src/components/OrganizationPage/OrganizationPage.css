@@ -1,33 +1,22 @@
-
-  .organization-content {
-    background-color: #f9f9f9;
-    padding: 20px;
-    border-radius: 10px;
-  }
-  
-  .logo-section {
-    display: flex;
-    align-items: center;
-  }
-  
-  .logo-section img {
-    width: 100px;
-    height: 100px;
-    margin-right: 20px;
-  }
-  
-  .organization__contact__info a {
-    display: block;
-    margin: 10px 0;
-  }
-  
-  .delete-button {
-    margin-top: 20px;
-    background-color: red;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
+.organization-content {
+  font-family: Arial, Helvetica, sans-serif;
+}
+.logo-section p {
+  font-size: 14px;
+  letter-spacing: 0.03em;
+  color: #a7b0c2;
+  margin-bottom: 2px;
+}
+.logo-section h2 {
+  font-size: 16px;
+  margin: 10px;
+  font-weight: 600;
+  color: #191f5d;
+}
+.logo-section {
+  display: flex;
+  background: #f1f4f9;
+  padding: 5px;
+  height: 55px;
+  gap: 10px;
+}

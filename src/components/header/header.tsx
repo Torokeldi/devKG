@@ -20,7 +20,7 @@ const Header: React.FC<{ isRegistered: boolean }> = ({ isRegistered }) => {
 
   const logoHeader = () => navigate("/");
   const toggleBurgerMenu = () => setIsBurgerOpen(!isBurgerOpen);
-  const handleJobsClick = () => navigate("/JobOpenings");
+  const handleJobsClick = () => navigate("/jobs");
 
   return (
     <div className="header">
@@ -70,7 +70,7 @@ const Header: React.FC<{ isRegistered: boolean }> = ({ isRegistered }) => {
             </div>
 
             {!isAuthenticated && (
-              <div className="header__enter" onClick={() => navigate("/DevForms")}>
+              <div className="header__enter" onClick={() => navigate("/FormPages")}>
                 <button>
                   <SlArrowRightCircle />
                   Войти

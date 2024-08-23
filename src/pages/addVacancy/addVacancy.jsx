@@ -20,7 +20,7 @@ function AddVacancy() {
         <LeftSidebar />
         <div className="right-add-vacancy_wrapper">
           <h1 className="head-title">Добавить новую вакансию</h1>
-          <p className="title-description">
+          <p className="title-message">
             Вакансия должна относится к сфере информационных технологий и будет
             опубликована после проверки модератором
           </p>

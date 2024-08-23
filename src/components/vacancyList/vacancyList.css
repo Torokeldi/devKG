@@ -36,7 +36,7 @@
 }
 
 .VacancyList__name,
-.VacancyList__office,
+.VacancyList__position,
 .VacancyList__price,
 .VacancyList__type {
     color: #191f5d;
