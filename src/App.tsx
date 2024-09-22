@@ -10,6 +10,10 @@ import AddVacancy from "./pages/addVacancy/addVacancy"
 import JobPage from "./components/JobPage/JobPage";
 import FormPages from "./pages/FormPages/FormPages";
 import OrganizationPage from "./components/OrganizationPage/OrganizationPage";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
+
 
 const router = createBrowserRouter([
     {
@@ -56,7 +60,9 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <RouterProvider router={router} />
+    <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+    </QueryClientProvider>
   )
 }
 
