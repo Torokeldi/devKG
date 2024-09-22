@@ -8,6 +8,7 @@ function Hero() {
     const { data, isLoading } = useFetch({
         url: "http://3.38.98.134/events",
     });
+    console.log("data: ", data);
     const [, setCompanyNames] = useState<string[]>([]);
 
     useEffect(() => {

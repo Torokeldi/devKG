@@ -1,51 +1,36 @@
-import { useState, useEffect, useCallback } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 interface UseFetchOptions {
     url: string;
 }
-
 interface UseFetchResult<T> {
     data: T[];
     isLoading: boolean;
     error: string | null;
     refetch: () => void;
 }
-
 const useFetch = <T = any>({ url }: UseFetchOptions): UseFetchResult<T> => {
-    const [data, setData] = useState<T[]>([]);
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [error, setError] = useState<string | null>(null);
-
-    const fetchData = useCallback(async () => {
-        setIsLoading(true);
-        setError(null);
+    const fetchData = async () => {
         try {
             const response = await fetch(url);
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+            if (!response.ok){
+                return [];
             }
             const result = await response.json();
-            setData(result.data as T[]);
+            return result.data;
         } catch (err: unknown) {
-            if (err instanceof Error) {
-                setError(err.message);
-            } else {
-                setError("Unknown error occurred");
-            }
-        } finally {
-            setIsLoading(false);
+            return [];
         }
-    }, [url]);
-
-    useEffect(() => {
-        fetchData();
-    }, [fetchData]);
-
+    };
+    const {data=[], isLoading, error, refetch} = useQuery({
+        queryKey: [url],
+        queryFn: fetchData,
+    })
     return {
         data,
         isLoading,
-        error,
-        refetch: fetchData,
+        error: error as string | null,
+        refetch,
     };
 };
 
